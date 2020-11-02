@@ -1,0 +1,142 @@
+<div id="main">
+    <div class="row">
+        <div id="breadcrumbs-wrapper" data-image="../../../../assets/images/gallery/breadcrumb-bg.jpg" style="background-image: url(../../../../assets/images/gallery/breadcrumb-bg.jpg)">
+            <div class="container">
+                <div class="row">
+                    <div class="col s12 m6 l6">
+                        <h3 class="breadcrumbs-title mt-0 mb-0 white-text"><span>Tareas</span></h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content-wrapper-before blue-grey lighten-5"></div>
+        <div class="col s12">
+            <div class="container">
+
+                <!-- Content Area Starts -->
+                <div class="app-todo">
+                    <div class="content-area content-right">
+                        <div class="app-wrapper">
+                            <div class="app-search">
+                                <i class="material-icons mr-2 search-icon">search</i>
+                                <input type="text" placeholder="Buscar tarea" class="app-filter" id="todo_filter">
+                            </div>
+                            <div class="card card card-default scrollspy border-radius-6 fixed-width">
+                                <div class="card-content p-0 pb-1">
+                                    <div class="todo-header">
+                                        <div class="header-checkbox">
+                                            <label>
+                                                <input type="checkbox" onClick="toggle(this)" />
+                                                <span></span>
+                                            </label>
+                                        </div>
+                                        <div class="list-content"></div>
+                                        <div class="todo-action">
+                                            <span class="sort-task"><i class="material-icons grey-text">sort</i></span>
+                                            <div class="select-action">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <ul class="collection todo-collection">
+                                        <li class="collection-item todo-items" *ngFor="let task of allTasks">
+                                            <div class="todo-move">
+                                                <i class="material-icons icon-move">more_vert</i>
+                                            </div>
+                                            <div class="list-left">
+                                                <label>
+                                                    <input type="checkbox" name="foo" />
+                                                    <span></span>
+                                                </label>
+                                            </div>
+                                            <div class="list-content">
+                                                <div class="list-title-area">
+                                                    <div class="list-title">{{task.title}}</div><span>{{task.user.firstName + ' ' + task.user.lastName}}</span>
+                                                </div>
+                                                <div class="col s12 m6 l6">
+                                                    <small><b>Descripción: </b></small>
+                                                    <div class="list-desc">{{task.description}}</div>
+                                                </div>
+                                                <div class="col s12 m6 l6">
+                                                    <small><b>Comentarios: </b></small>
+                                                    <div class="list-desc">{{task.comments}}</div>
+                                                </div>
+                                            </div>
+                                            <div class="list-right">
+                                                <div class="list-date"> {{task.date}} </div>
+                                                <div class="delete-task">
+                                                    <i (click)="updateItem(task)" class="material-icons">edit</i>
+                                                    <i (click)="removeTask(task)" class="material-icons">delete</i>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="collection-item no-data-found">
+                                            <h6 class="center-align font-weight-500">No se encontraron resultados</h6>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Content Area Ends -->
+
+                <!-- Add new todo popup -->
+                <div *ngIf="(user && user.role == 'Admin')" style="bottom: 54px; right: 19px;" class="fixed-action-btn direction-top">
+                    <a class="btn-floating btn-large primary-text gradient-shadow todo-sidebar-trigger">
+                        <i class="material-icons">note_add</i>
+                    </a>
+                </div>
+                <!-- Add new todo popup Ends-->
+
+                <!-- todo compose sidebar -->
+                <div *ngIf="(user && user.role == 'Admin')" class="todo-compose-sidebar show">
+                    <div class="card quill-wrapper">
+                        <div class="card-content pt-0">
+                            <div class="card-header display-flex pb-2">
+                                <h3 class="card-title todo-title-label">Nueva Tarea</h3>
+                                <button class="btn todo-complete hide">Completada</button>
+                                <div class="close close-icon">
+                                    <i (click)="close()" class="material-icons">close</i>
+                                </div>
+                            </div>
+                            <div class="divider"></div>
+                            <!-- form start -->
+                            <form [formGroup]="updateTaskForm" (ngSubmit)="updateTask()" class="edit-todo-item mt-10 mb-10">
+                                <div class="input-field">
+                                    <textarea formControlName="title" id="title" class="edit-todo-item-title materialize-textarea"></textarea>
+                                    <label for="title">Título de la tarea</label>
+                                </div>
+                                <div class="input-field">
+                                    <p>Asignar a</p>
+                                    <select class="select2 browser-default" id="user" name="user" formControlName="user">
+                                        <option *ngFor="let i of allUsers" value="{{i._id}}">{{i.firstName + ' ' + i.lastName}}</option>
+                                    </select>
+                                </div>
+                                <div class="input-field">
+                                    <p>Fecha máxima de entrega</p>
+                                    <input id="date" name="date" formControlName="date" type="date" class="assign-date" placeholder="Fecha máxima de entrega" value="">
+                                    <p *ngIf="updateTaskForm.get('date').hasError('fechaPasado')">No puedes seleccionar una fecha en el pasado</p>
+                                </div>
+                                <div class="input-field">
+                                    <textarea formControlName="description" id="description" class="edit-todo-item-title materialize-textarea"></textarea>
+                                    <label for="description">Descripción de la tarea</label>
+                                </div>
+                                <div class="input-field">
+                                    <textarea formControlName="comments" id="comments" class="edit-todo-item-title materialize-textarea"></textarea>
+                                    <label for="comments">Comentarios</label>
+                                </div>
+                                <div class="card-action pl-0 pr-0 right-align">
+                                    <button class="btn-small waves-effect waves-light add-todo">
+                                        <span>Asignar tarea</span>
+                                    </button>
+                                </div>
+                            </form>
+                            <!-- form start end-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content-overlay"></div>
+        </div>
+    </div>
+</div>

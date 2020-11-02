@@ -1,0 +1,114 @@
+<div id="main">
+    <div class="row">
+        <div id="breadcrumbs-wrapper" data-image="../../../../assets/images/gallery/breadcrumb-bg.jpg" style="background-image: url(../../../../assets/images/gallery/breadcrumb-bg.jpg)">
+            <div class="container">
+                <div class="row">
+                    <div class="col s12 m6 l6">
+                        <h3 class="breadcrumbs-title mt-0 mb-0 white-text"><span>Cargos</span></h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content-wrapper-before blue-grey lighten-5"></div>
+        <div class="col s12">
+            <div class="container">
+                <!-- Content Area Starts -->
+                <div class="app-todo">
+                    <div class="content-area">
+                        <div class="app-wrapper">
+                            <div class="app-search">
+                                <i class="material-icons mr-2 search-icon">search</i>
+                                <input type="text" placeholder="Buscar cargo" class="app-filter" id="todo_filter">
+                            </div>
+                            <div class="card card card-default scrollspy border-radius-6 fixed-width">
+                                <div class="card-content p-0 pb-1">
+                                    <div class="todo-header">
+                                        <div class="header-checkbox">
+                                            <label>
+                                                <input type="checkbox" onClick="toggle(this)" />
+                                                <span></span>
+                                            </label>
+                                        </div>
+                                        <div class="list-content"></div>
+                                        <div class="todo-action">
+                                            <span class="sort-task"><i class="material-icons grey-text">sort</i></span>
+                                        </div>
+                                    </div>
+                                    <ul class="collection todo-collection">
+                                        <li class="collection-item todo-items" *ngFor="let jobTitle of allJobTitles">
+                                            <div class="todo-move">
+                                                <i class="material-icons icon-move">more_vert</i>
+                                            </div>
+                                            <div class="list-left">
+                                                <label>
+                                                    <input type="checkbox" name="foo" />
+                                                    <span></span>
+                                                </label>
+                                            </div>
+                                            <div class="list-content">
+                                                <div class="list-title-area">
+                                                    <div class="list-title">{{jobTitle.jobTitle}}</div>
+                                                </div>
+                                            </div>
+                                            <div class="list-right">
+                                                <div class="delete-task">
+                                                    <i (click)="updateItem(jobTitle)" class="material-icons">edit</i>
+                                                    <i (click)="removeJobTitle(jobTitle)" class="material-icons">delete</i>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                        <li class="collection-item no-data-found">
+                                            <h6 class="center-align font-weight-500">No se encontraron resultados</h6>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Content Area Ends -->
+
+                <!-- Add new todo popup -->
+                <div style="bottom: 54px; right: 19px;" class="fixed-action-btn direction-top">
+                    <a class="btn-floating btn-large primary-text gradient-shadow todo-sidebar-trigger">
+                        <i class="material-icons">note_add</i>
+                    </a>
+                </div>
+                <!-- Add new todo popup Ends-->
+
+                <!-- todo compose sidebar -->
+                <div class="todo-compose-sidebar show">
+                    <div class="card quill-wrapper">
+                        <div class="card-content pt-0">
+                            <div class="card-header display-flex pb-2">
+                                <h3 class="card-title todo-title-label">Cargo</h3>
+                                <button class="btn todo-complete hide">Completada</button>
+                                <div class="close close-icon">
+                                    <i (click)="close()" class="material-icons">close</i>
+                                </div>
+                            </div>
+                            <div class="divider"></div>
+                            <!-- form start -->
+                            <form [formGroup]="updateJobTitleForm" (ngSubmit)="updateJobTitle()" class="edit-todo-item mt-10 mb-10">
+                                <div class="input-field">
+                                    <i class="material-icons prefix">account_circle</i>
+                                    <textarea formControlName="jobTitle" id="jobTitle" class="edit-todo-item-title materialize-textarea"></textarea>
+                                    <label for="jobTitle">Cargo</label>
+                                </div>
+                                <div *ngIf="!updateJobTitleForm.valid">
+                                    <p>No está lleno</p>
+                                </div>
+                                <div class="card-action pl-0 pr-0 right-align">
+                                    <button class="btn-small waves-effect waves-light add-todo">
+                                        <span>Actualizar</span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
