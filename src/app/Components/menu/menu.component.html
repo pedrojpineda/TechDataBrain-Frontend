@@ -1,4 +1,4 @@
-<aside *ngIf="user" class="sidenav-main nav-expanded nav-lock nav-collapsible sidenav-dark sidenav-active-rounded">
+<aside *ngIf="userLogged" class="sidenav-main nav-expanded nav-lock nav-collapsible sidenav-dark sidenav-active-rounded">
     <div class="brand-sidebar">
         <h1 class="logo-wrapper">
             <a class="brand-logo darken-1" href="/"><img class="hide-on-med-and-down " src="./assets/images/logo/Logo.png" alt="logo TechDataBrain" /><img class="show-on-medium-and-down hide-on-med-and-up" src="./assets/images/logo/Logo.png" alt="logo TechDataBrain" /><span class="logo-text hide-on-med-and-down"
@@ -7,25 +7,27 @@
         </h1>
     </div>
     <ul class="sidenav sidenav-collapsible leftside-navigation collapsible sidenav-fixed menu-shadow" id="slide-out" data-menu="menu-navigation" data-collapsible="accordion">
-        <li *ngIf="(user.role == 'User')" class="bold"><a href="tareas" class="waves-effect waves-cyan "><i class="material-icons">check</i><span class="menu-title" data-i18n="ToDo">Tareas</span></a>
+        <li *ngIf="(userLogged.jobTitle != '5f83ad587c4f0272ec664b80')" class="bold"><a href="tareas" class="waves-effect waves-cyan "><i class="material-icons">check</i><span class="menu-title" data-i18n="ToDo">Tareas</span></a>
         </li>
-        <li *ngIf="(user.role == 'Admin')" class="bold"><a href="administrar-tareas" class="waves-effect waves-cyan "><i class="material-icons">check</i><span class="menu-title" data-i18n="ToDo">Administrar Tareas</span></a>
+        <li *ngIf="(userLogged.jobTitle == '5f83ad587c4f0272ec664b80')" class="bold"><a href="administrar-tareas" class="waves-effect waves-cyan "><i class="material-icons">check</i><span class="menu-title" data-i18n="ToDo">Administrar Tareas</span></a>
         </li>
         <li class="bold"><a class="collapsible-header waves-effect waves-cyan " href="JavaScript:void(0)"><i class="material-icons">face</i><span class="menu-title" data-i18n="User">Usuarios</span></a>
             <div class="collapsible-body">
-                <ul *ngIf="(user.role == 'User')" class="collapsible collapsible-sub" data-collapsible="accordion">
-                    <li><a href="usuarios/directorio"><i class="material-icons">radio_button_unchecked</i><span data-i18n="Register">Directorio</span></a>
+                <ul class="collapsible collapsible-sub" data-collapsible="accordion">
+                    <li *ngIf="(userLogged.role == 'User')"><a href="usuarios/directorio"><i class="material-icons">radio_button_unchecked</i><span data-i18n="Register">Directorio</span></a>
+                    </li>
+                    <li class="bold"><a (click)="updateUser(userLogged)" class="waves-effect waves-cyan "><i class="material-icons"> radio_button_unchecked </i><span class="menu-title" data-i18n="ToDo">Actualizar mi usuario</span></a>
                     </li>
                 </ul>
-                <ul *ngIf="(user.role == 'Admin')" class="collapsible collapsible-sub" data-collapsible="accordion">
-                    <li><a routerLink="usuarios/administrar-usuarios"><i class="material-icons">radio_button_unchecked</i><span data-i18n="Register">Administrar usuarios</span></a>
+                <ul *ngIf="(userLogged.role == 'Admin')" class="collapsible collapsible-sub" data-collapsible="accordion">
+                    <li><a href="usuarios/administrar-usuarios"><i class="material-icons">radio_button_unchecked</i><span data-i18n="Register">Administrar usuarios</span></a>
                     </li>
                 </ul>
             </div>
         </li>
         <li class="bold"><a class="collapsible-header waves-effect waves-cyan " href="JavaScript:void(0)"><i class="material-icons">account_balance</i><span class="menu-title" data-i18n="Dashboard">Organización</span></a>
             <div class="collapsible-body">
-                <ul *ngIf="(user.role == 'User')" class="collapsible collapsible-sub" data-collapsible="accordion">
+                <ul *ngIf="(userLogged.role == 'User')" class="collapsible collapsible-sub" data-collapsible="accordion">
                     <li><a href="organizacion/dependencias"><i class="material-icons">radio_button_unchecked</i><span data-i18n="Dependencias">Dependencias</span></a>
                     </li>
                     <li><a href="organizacion/tipos-vinculacion"><i class="material-icons">radio_button_unchecked</i><span data-i18n="Vinculación">Tipos de vinculación</span></a>
@@ -33,7 +35,7 @@
                     <li><a href="organizacion/cargos"><i class="material-icons">radio_button_unchecked</i><span data-i18n="Cargos">Cargos</span></a>
                     </li>
                 </ul>
-                <ul *ngIf="(user.role == 'Admin')" class="collapsible collapsible-sub" data-collapsible="accordion">
+                <ul *ngIf="(userLogged.role == 'Admin')" class="collapsible collapsible-sub" data-collapsible="accordion">
                     <li><a href="organizacion/administrar-dependencias"><i class="material-icons">radio_button_unchecked</i><span data-i18n="Dependencias">Dependencias</span></a>
                     </li>
                     <li><a href="organizacion/administrar-tipos-vinculacion"><i class="material-icons">radio_button_unchecked</i><span data-i18n="Vinculación">Tipos de vinculación</span></a>
@@ -46,7 +48,7 @@
 
 
         <a (click)="cerrarSession()">Cerrar sesión...</a>
-        <p>Hola {{user.firstName}}</p>
+        <p>Hola {{userLogged.firstName}}</p>
     </ul>
     <div class="navigation-background"></div><a class="sidenav-trigger btn-sidenav-toggle btn-floating btn-medium waves-effect waves-light hide-on-large-only" href="#" data-target="slide-out"><i class="material-icons">menu</i></a>
 </aside>

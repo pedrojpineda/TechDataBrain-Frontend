@@ -17,7 +17,7 @@ export class AuthGuard implements CanActivate {
       route: ActivatedRouteSnapshot,
       state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if(this.storage.getToken() != null){
-      if(this.isAdmin(route.data.only)){
+      if(this.isAdmin(route.data.only) || this.isDirectivo(route.data.only)){
         return true
       } else {
         this.router.navigate(['/'])
@@ -26,13 +26,21 @@ export class AuthGuard implements CanActivate {
     }
       this.router.navigate(['/login'])
       return false
-      }
-  
+    }
+      
       isAdmin(onlyParams){
         const infoUser = this.storage.dataUser()
         if( (infoUser.role == 'Admin' && onlyParams == 'Admin' || !onlyParams) ){
           return true
         }
         return false
-      }    
+      }
+
+      isDirectivo(onlyParams){
+        const infoUser = this.storage.dataUser()
+        if( (infoUser.jobTitle == '5f83ad587c4f0272ec664b80' && onlyParams == 'Directivo' || !onlyParams) ){
+          return true
+        }
+        return false
+      }
   }

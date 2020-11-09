@@ -51,21 +51,14 @@
                                             <div class="list-content">
                                                 <div class="list-title-area">
                                                     <div class="list-title">{{task.title}}</div><span>{{task.user.firstName + ' ' + task.user.lastName}}</span>
-                                                </div>
-                                                <div class="col s12 m6 l6">
-                                                    <small><b>Descripción: </b></small>
-                                                    <div class="list-desc">{{task.description}}</div>
-                                                </div>
-                                                <div class="col s12 m6 l6">
-                                                    <small><b>Comentarios: </b></small>
-                                                    <div class="list-desc">{{task.comments}}</div>
+                                                    <div class="list-date"> {{task.date}} </div>
                                                 </div>
                                             </div>
                                             <div class="list-right">
-                                                <div class="list-date"> {{task.date}} </div>
-                                                <div *ngIf="(user && user.role == 'Admin')" class="delete-task">
-                                                    <i (click)="updateItem(task)" class="material-icons">edit</i>
-                                                    <i (click)="removeTask(task)" class="material-icons">delete</i>
+                                                <div class="delete-task">
+                                                    <i *ngIf="(user && user.jobTitle == '5f83ad587c4f0272ec664b80')" (click)="updateItem(task)" class="material-icons">edit</i>
+                                                    <i *ngIf="(user && user.jobTitle == '5f83ad587c4f0272ec664b80')" (click)="removeTask(task)" class="material-icons">delete</i>
+                                                    <i *ngIf="(user && user.jobTitle != '5f83ad587c4f0272ec664b80')" (click)="lookItem(task)" class="material-icons">visibility</i>
                                                 </div>
                                             </div>
                                         </li>
@@ -81,7 +74,7 @@
                 <!-- Content Area Ends -->
 
                 <!-- Add new todo popup -->
-                <div *ngIf="(user && user.role == 'Admin')" style="bottom: 54px; right: 19px;" class="fixed-action-btn direction-top">
+                <div *ngIf="(user && user.jobTitle == '5f83ad587c4f0272ec664b80')" style="bottom: 54px; right: 19px;" class="fixed-action-btn direction-top">
                     <a class="btn-floating btn-large primary-text gradient-shadow todo-sidebar-trigger">
                         <i class="material-icons">note_add</i>
                     </a>
@@ -89,8 +82,8 @@
                 <!-- Add new todo popup Ends-->
 
                 <!-- todo compose sidebar -->
-                <div *ngIf="(user && user.role == 'Admin')" class="todo-compose-sidebar">
-                    <div class="card quill-wrapper">
+                <div *ngIf="(user && user.jobTitle == '5f83ad587c4f0272ec664b80')" class="todo-compose-sidebar">
+                    <div class="card">
                         <div class="card-content pt-0">
                             <div class="card-header display-flex pb-2">
                                 <h3 class="card-title todo-title-label">Nueva Tarea</h3>

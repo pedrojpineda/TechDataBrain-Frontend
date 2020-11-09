@@ -14,7 +14,7 @@ import * as moment from 'moment';
   styleUrls: ['./update-user.component.css']
 })
 export class UpdateUserComponent implements OnInit {
-  
+  userLogged;
   user;
   idUser;
   userData;
@@ -36,10 +36,10 @@ export class UpdateUserComponent implements OnInit {
     ) {
       this.storageService.auth$.subscribe(
         (isAuth) => {
-          this.user = isAuth
+          this.userLogged = isAuth
         }
       )
-      this.idUser = this.activatedRoute.snapshot.paramMap.get('id')
+    this.idUser = this.activatedRoute.snapshot.paramMap.get('id')
     let storageUser = localStorage.getItem(`user-${this.idUser}`)
     this.userData = JSON.parse(storageUser)
       this.getDepartments()
@@ -61,7 +61,7 @@ export class UpdateUserComponent implements OnInit {
       lastName: [this.userData.lastName, Validators.required],
       role: [this.userData.role, Validators.required],
       email: [this.userData.email, [Validators.required, Validators.email]],
-      password: [this.userData.password, [Validators.required, Validators.minLength(6)]],
+      password: ['fakePass', Validators.minLength(6)],
       idNumber: [this.userData.idNumber, Validators.required],
       birthday: [date, [Validators.required, this.validateBirthdayField]],
       gender: [this.userData.gender, Validators.required],
@@ -155,6 +155,7 @@ export class UpdateUserComponent implements OnInit {
       )
     } else {
       alert('Todos los campos deben estar llenos')
+      window.location.href = "/usuarios/directorio"
     }
   }
 

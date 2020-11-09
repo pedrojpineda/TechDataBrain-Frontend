@@ -50,20 +50,12 @@
                                             </div>
                                             <div class="list-content">
                                                 <div class="list-title-area">
-                                                    <div class="list-title">{{task.title}}</div><span>{{task.user.firstName + ' ' + task.user.lastName}}</span>
-                                                </div>
-                                                <div class="col s12 m6 l6">
-                                                    <small><b>Descripción: </b></small>
-                                                    <div class="list-desc">{{task.description}}</div>
-                                                </div>
-                                                <div class="col s12 m6 l6">
-                                                    <small><b>Comentarios: </b></small>
-                                                    <div class="list-desc">{{task.comments}}</div>
+                                                    <div class="list-title">{{task.title}}</div><span>{{task.user.firstName + ' ' + task.user.lastName}}</span><i (click)="lookItem(task)" class="material-icons">visibility</i>
                                                 </div>
                                             </div>
                                             <div class="list-right">
                                                 <div class="list-date"> {{task.date}} </div>
-                                                <div class="delete-task">
+                                                <div *ngIf="(user && user.jobTitle == '5f83ad587c4f0272ec664b80')" class="delete-task">
                                                     <i (click)="updateItem(task)" class="material-icons">edit</i>
                                                     <i (click)="removeTask(task)" class="material-icons">delete</i>
                                                 </div>
@@ -81,7 +73,7 @@
                 <!-- Content Area Ends -->
 
                 <!-- Add new todo popup -->
-                <div *ngIf="(user && user.role == 'Admin')" style="bottom: 54px; right: 19px;" class="fixed-action-btn direction-top">
+                <div *ngIf="(user && user.jobTitle == '5f83ad587c4f0272ec664b80')" style="bottom: 54px; right: 19px;" class="fixed-action-btn direction-top">
                     <a class="btn-floating btn-large primary-text gradient-shadow todo-sidebar-trigger">
                         <i class="material-icons">note_add</i>
                     </a>
@@ -89,12 +81,11 @@
                 <!-- Add new todo popup Ends-->
 
                 <!-- todo compose sidebar -->
-                <div *ngIf="(user && user.role == 'Admin')" class="todo-compose-sidebar show">
+                <div *ngIf="(user && user.jobTitle == '5f83ad587c4f0272ec664b80')" class="todo-compose-sidebar show">
                     <div class="card quill-wrapper">
                         <div class="card-content pt-0">
                             <div class="card-header display-flex pb-2">
-                                <h3 class="card-title todo-title-label">Nueva Tarea</h3>
-                                <button class="btn todo-complete hide">Completada</button>
+                                <h3 class="card-title todo-title-label">Actualizar tarea</h3>
                                 <div class="close close-icon">
                                     <i (click)="close()" class="material-icons">close</i>
                                 </div>
@@ -127,8 +118,43 @@
                                 </div>
                                 <div class="card-action pl-0 pr-0 right-align">
                                     <button class="btn-small waves-effect waves-light add-todo">
-                                        <span>Asignar tarea</span>
+                                        <span>Actualizar tarea</span>
                                     </button>
+                                </div>
+                            </form>
+                            <!-- form start end-->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- todo compose sidebar -->
+                <div *ngIf="(user && user.jobTitle != '5f83ad587c4f0272ec664b80')" class="todo-compose-sidebar show">
+                    <div class="card quill-wrapper">
+                        <div class="card-content pt-0">
+                            <div class="card-header display-flex pb-2">
+                                <h3 class="card-title todo-title-label">Ver tarea</h3>
+                                <div class="close close-icon">
+                                    <i (click)="close()" class="material-icons">close</i>
+                                </div>
+                            </div>
+                            <div class="divider"></div>
+                            <!-- form start -->
+                            <form [formGroup]="updateTaskForm" class="edit-todo-item mt-10 mb-10">
+                                <div class="input-field">
+                                    <textarea disabled formControlName="title" id="title" class="edit-todo-item-title materialize-textarea"></textarea>
+                                    <label for="title">Título de la tarea</label>
+                                </div>
+                                <div class="input-field">
+                                    <p>Fecha máxima de entrega</p>
+                                    <input disabled id="date" name="date" formControlName="date" type="date" class="assign-date" placeholder="Fecha máxima de entrega" value="">
+                                </div>
+                                <div class="input-field">
+                                    <textarea disabled formControlName="description" id="description" class="edit-todo-item-title materialize-textarea"></textarea>
+                                    <label for="description">Descripción de la tarea</label>
+                                </div>
+                                <div class="input-field">
+                                    <textarea disabled formControlName="comments" id="comments" class="edit-todo-item-title materialize-textarea"></textarea>
+                                    <label for="comments">Comentarios</label>
                                 </div>
                             </form>
                             <!-- form start end-->

@@ -107,6 +107,11 @@ export class UpdateTaskComponent implements OnInit {
     window.location.href = `/actualizar-tarea/${task._id}`
   }
 
+  lookItem(task){
+    localStorage.setItem(`task-${task._id}`, JSON.stringify(task))
+    window.location.href = `/ver-tarea/${task._id}`
+  }
+
   updateTask(){
     if(this.updateTaskForm.valid){
       this.taskService.updateTask(this.updateTaskForm.value, this.idTask).subscribe(

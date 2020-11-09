@@ -34,9 +34,11 @@ const routesApp: Routes = [
   { path: 'usuarios/directorio', canActivate: [AuthGuard], component: AddUserComponent },
   { path: 'usuarios/administrar-usuarios',  canActivate: [AuthGuard], data: {only: 'Admin'}, component: AddUserComponent },
   { path: 'usuarios/actualizar-usuario/:id',  canActivate: [AuthGuard], data: {only: 'Admin'}, component: UpdateUserComponent },
+  { path: 'usuarios/actualizar-mi-usuario/:id',  canActivate: [AuthGuard], component: UpdateUserComponent },
   { path: 'tareas', canActivate: [AuthGuard], component: AddTaskComponent },
-  { path: 'administrar-tareas', canActivate: [AuthGuard], data: {only: 'Admin'}, component: AddTaskComponent },
-  { path: 'actualizar-tarea/:id', canActivate: [AuthGuard], data: {only: 'Admin'}, component: UpdateTaskComponent },
+  { path: 'administrar-tareas', canActivate: [AuthGuard], data: {only: 'Directivo'}, component: AddTaskComponent },
+  { path: 'actualizar-tarea/:id', canActivate: [AuthGuard], data: {only: 'Directivo'}, component: UpdateTaskComponent },
+  { path: 'ver-tarea/:id', canActivate: [AuthGuard], component: UpdateTaskComponent },
   { path: 'login', component: LoginComponent }
 ]
 

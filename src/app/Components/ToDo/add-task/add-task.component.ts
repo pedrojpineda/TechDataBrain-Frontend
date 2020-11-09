@@ -117,4 +117,9 @@ export class AddTaskComponent implements OnInit {
     window.location.href = `/actualizar-tarea/${task._id}`
   }
 
+  lookItem(task){
+    localStorage.setItem(`task-${task._id}`, JSON.stringify(task))
+    window.location.href = `/ver-tarea/${task._id}`
+  }
+
 }

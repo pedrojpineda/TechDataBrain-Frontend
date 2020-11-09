@@ -14,7 +14,7 @@
             <div class="container">
                 <!-- Add new contact popup -->
                 <div class="contact-overlay"></div>
-                <div *ngIf="(user && user.role == 'Admin')" style="bottom: 54px; right: 19px;" class="fixed-action-btn direction-top">
+                <div *ngIf="(userLogged && userLogged.role == 'Admin')" style="bottom: 54px; right: 19px;" class="fixed-action-btn direction-top">
                     <a class="btn-floating btn-large primary-text gradient-shadow contact-sidebar-trigger">
                         <i class="material-icons">person_add</i>
                     </a>
@@ -40,7 +40,7 @@
                                             <th>Cargo</th>
                                             <th>Extensión</th>
                                             <th>Correo electrónico</th>
-                                            <th>Administrar</th>
+                                            <th *ngIf="(userLogged && userLogged.role == 'Admin')">Administrar</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -52,7 +52,7 @@
                                             <td>{{u.jobTitle.jobTitle}}</td>
                                             <td>{{u.workPhone}}</td>
                                             <td>{{u.email}}</td>
-                                            <td><i (click)="updateItem(user)" class="material-icons delete">edit</i><i (click)="removeUser(user)" class="material-icons delete">delete</i></td>
+                                            <td *ngIf="(userLogged && userLogged.role == 'Admin')"><i (click)="updateItem(user)" class="material-icons delete">edit</i><i (click)="removeUser(user)" class="material-icons delete">delete</i></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -76,7 +76,7 @@
                             <!-- form start -->
                             <form [formGroup]="updateUserForm" (ngSubmit)="updateUser()" class="edit-contact-item mb-5 mt-5">
                                 <div class="row">
-                                    <div class="input-field col s12">
+                                    <div *ngIf="(userLogged && userLogged.role == 'Admin')" class="input-field col s12">
                                         <i class="material-icons prefix"> email </i>
                                         <input id="email" name="email" type="email" formControlName="email" class="validate" value="">
                                         <label for="email">Correo electrónico corporativo</label>
@@ -88,17 +88,17 @@
                                         <label for="password">Contraseña</label>
                                         <p *ngIf="updateUserForm.get('password').hasError('minlength')">La contraseña debe tener mínimo 6 caracteres</p>
                                     </div>
-                                    <div class="input-field col s12">
+                                    <div *ngIf="(userLogged && userLogged.role == 'Admin')" class="input-field col s12">
                                         <i class="material-icons prefix"> perm_identity </i>
                                         <input id="firstName" name="firstName" formControlName="firstName" type="text" class="validate" value="">
                                         <label for="firstName">Nombres</label>
                                     </div>
-                                    <div class="input-field col s12">
+                                    <div *ngIf="(userLogged && userLogged.role == 'Admin')" class="input-field col s12">
                                         <i class="material-icons prefix"> perm_identity </i>
                                         <input id="lastName" name="lastName" formControlName="lastName" type="text" class="validate" value="">
                                         <label for="lastName">Apellidos</label>
                                     </div>
-                                    <div class="input-field col s12">
+                                    <div *ngIf="(userLogged && userLogged.role == 'Admin')" class="input-field col s12">
                                         <p>Rol</p>
                                         <select class="select2 browser-default" id="role" name="role" formControlName="role">
                                             <option>User</option>
@@ -106,19 +106,19 @@
                                         </select>
                                         <label for="role"></label>
                                     </div>
-                                    <div class="input-field col s12">
+                                    <div *ngIf="(userLogged && userLogged.role == 'Admin')" class="input-field col s12">
                                         <i class="material-icons prefix"> note </i>
                                         <input id="idNumber" name="idNumber" formControlName="idNumber" type="number" class="validate" value="">
                                         <label for="idNumber">Documento de identidad</label>
                                     </div>
-                                    <div class="input-field col s12">
+                                    <div *ngIf="(userLogged && userLogged.role == 'Admin')" class="input-field col s12">
                                         <p>Fecha de nacimiento</p>
                                         <input id="birthday" name="birthday" formControlName="birthday" type="date" placeholder="Seleccione su fecha de nacimiento">
                                         <label for="birthday"></label>
                                         <p *ngIf="updateUserForm.get('birthday').hasError('fechaFuturo')">No puedes seleccionar una fecha en el futuro</p>
                                         <p *ngIf="updateUserForm.get('birthday').hasError('menorEdad')">Eres menor de edad</p>
                                     </div>
-                                    <div class="input-field col s12">
+                                    <div *ngIf="(userLogged && userLogged.role == 'Admin')" class="input-field col s12">
                                         <p>Género</p>
                                         <select class="select2 browser-default" id="gender" name="gender" formControlName="gender">
                                             <option>Femenino</option>
@@ -127,7 +127,7 @@
                                         </select>
                                         <label for="gender"></label>
                                     </div>
-                                    <div class="input-field col s12">
+                                    <div *ngIf="(userLogged && userLogged.role == 'Admin')" class="input-field col s12">
                                         <p>Estado civil</p>
                                         <select class="select2 browser-default" id="civilStatus" name="civilStatus" formControlName="civilStatus">
                                             <option>Soltero/a</option>
@@ -169,28 +169,28 @@
                                         <input id="city" name="city" formControlName="city" type="text" class="validate" value="" data-error=".errorTxt12">
                                         <label for="city">Ciudad o municipio de residencia</label>
                                     </div>
-                                    <div class="input-field col s12">
+                                    <div *ngIf="(userLogged && userLogged.role == 'Admin')" class="input-field col s12">
                                         <p>Dependencia</p>
                                         <select class="select2 browser-default" id="department" name="department" formControlName="department">
                                             <option *ngFor="let i of allDepartments" value="{{i._id}}">{{i.department}}</option>
                                         </select>
                                         <label for="department"></label>
                                     </div>
-                                    <div class="input-field col s12">
+                                    <div *ngIf="(userLogged && userLogged.role == 'Admin')" class="input-field col s12">
                                         <p>Tipo de vinculación</p>
                                         <select class="select2 browser-default" id="jobType" name="jobType" formControlName="jobType">
                                             <option *ngFor="let i of allJobTypes" value="{{i._id}}">{{i.jobType}}</option>
                                         </select>
                                         <label for="jobType"></label>
                                     </div>
-                                    <div class="input-field col s12">
+                                    <div *ngIf="(userLogged && userLogged.role == 'Admin')" class="input-field col s12">
                                         <p>Cargo</p>
                                         <select class="select2 browser-default" id="jobTitle" name="jobTitle" formControlName="jobTitle">
                                             <option *ngFor="let i of allJobTitles" value="{{i._id}}">{{i.jobTitle}}</option>
                                         </select>
                                         <label for="jobTitle"></label>
                                     </div>
-                                    <div class="input-field col s12">
+                                    <div *ngIf="(userLogged && userLogged.role == 'Admin')" class="input-field col s12">
                                         <i class="material-icons prefix"> perm_identity </i>
                                         <input id="leader" name="leader" formControlName="leader" type="text" class="validate" value="">
                                         <label for="leader">Jefe o Superior</label>

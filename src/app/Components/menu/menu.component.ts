@@ -9,14 +9,14 @@ import { StorageService } from '../../Services/Users/storage.service'
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit {
-  user;
+  userLogged;
   constructor(
     private storageService: StorageService,
     private router: Router
   ) { 
     this.storageService.auth$.subscribe(
       (isAuth) => {
-        this.user = isAuth
+        this.userLogged = isAuth
       }
     )
   }
@@ -27,6 +27,11 @@ export class MenuComponent implements OnInit {
   cerrarSession(){
     this.storageService.removeToken();
     this.router.navigate(['/login'])
+    }
+
+    updateUser(userLogged){
+      localStorage.setItem(`user-${userLogged.sub}`, JSON.stringify(userLogged))
+      window.location.href = `/usuarios/actualizar-mi-usuario/${userLogged.sub}`
   }
 
 }
